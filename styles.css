@@ -1,0 +1,180 @@
+:root {
+    --primary: #4F46E5;
+    --primary-light: #EEF2FF;
+    --bg: #F3F4F6;
+    --card-bg: #FFFFFF;
+    --text: #1F2937;
+    --text-muted: #6B7280;
+    --border: #E5E7EB;
+    --success: #10B981;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    color: var(--primary);
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Tarjeta principal (Hoy) */
+.card {
+    background-color: var(--card-bg);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    border-top: 5px solid var(--primary);
+}
+
+.card h2 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.card .name {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin: 0.5rem 0;
+}
+
+.date-display {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Tarjeta de descansos */
+.rest-card {
+    background-color: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    color: #065F46;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.rest-card strong {
+    color: var(--success);
+}
+
+/* Contenedor de la tabla */
+.table-container {
+    background-color: var(--card-bg);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background-color: #F9FAFB;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr.today-row {
+    background-color: var(--primary-light);
+}
+
+tr.today-row td {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* =========================================
+   Diseño Responsivo (Mobile First / Adaptable)
+   ========================================= */
+@media (max-width: 640px) {
+    body {
+        padding: 0.5rem;
+    }
+
+    .card {
+        padding: 1.25rem;
+    }
+
+    .card .name {
+        font-size: 2rem;
+    }
+
+    .table-container {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr {
+        background-color: var(--card-bg);
+        margin-bottom: 1rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        border: 1px solid var(--border);
+        overflow: hidden;
+    }
+
+    tr.today-row {
+        border: 2px solid var(--primary);
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        text-align: right;
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--text-muted);
+        text-align: left;
+        margin-right: 1rem;
+    }
+}
