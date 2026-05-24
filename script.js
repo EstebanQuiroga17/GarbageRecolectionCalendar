@@ -12,10 +12,32 @@ let textoFecha = hoy.toLocaleDateString('es-ES', opcionesFecha);
 textoFecha = textoFecha.charAt(0).toUpperCase() + textoFecha.slice(1);
 document.getElementById('date-display').innerText = textoFecha;
 
-// Calcular semanas transcurridas desde la fecha base
-const milisegundosPorSemana = 1000 * 60 * 60 * 24 * 7;
-const diferenciaTiempo = hoy.getTime() - fechaBase.getTime();
-const semanasTranscurridas = Math.floor(diferenciaTiempo / milisegundosPorSemana);
+// Función para contar cuántos lunes han transcurrido desde la fecha base
+function contarLunesTranscurridos(fechaBase, fechaActual) {
+    // Encontrar el primer lunes en o después de fechaBase
+    let primerLunes = new Date(fechaBase);
+    const diaDelLunes = 1; // 1 = lunes en JavaScript (0=domingo, 1=lunes, etc)
+    const diasAlPrimerLunes = (diaDelLunes - primerLunes.getDay() + 7) % 7;
+    
+    if (diasAlPrimerLunes > 0) {
+        primerLunes.setDate(primerLunes.getDate() + diasAlPrimerLunes);
+    }
+    
+    // Si fechaActual es antes del primer lunes, retornar 0
+    if (fechaActual < primerLunes) {
+        return 0;
+    }
+    
+    // Calcular diferencia en días entre el primer lunes y la fecha actual
+    const msAlDia = 1000 * 60 * 60 * 24;
+    const diferenciaDias = Math.floor((fechaActual - primerLunes) / msAlDia);
+    
+    // El número de rotaciones es el número de semanas completas desde el primer lunes
+    return Math.floor(diferenciaDias / 7);
+}
+
+// Calcular rotaciones basadas en lunes transcurridos
+const lunesTranscurridos = contarLunesTranscurridos(fechaBase, hoy);
 
 // Función para rotar la fila circular
 function rotarFila(arreglo, desplazamientos) {
@@ -24,8 +46,8 @@ function rotarFila(arreglo, desplazamientos) {
 }
 
 // Generar los grupos de la semana actual
-const filaSemanaActual = rotarFila(grupoEntreSemana, semanasTranscurridas);
-const filaFindeActual = rotarFila(grupoFinSemana, semanasTranscurridas);
+const filaSemanaActual = rotarFila(grupoEntreSemana, lunesTranscurridos);
+const filaFindeActual = rotarFila(grupoFinSemana, lunesTranscurridos);
 
 // Mostrar quiénes descansan esta semana (los que quedan en la posición 0)
 document.getElementById('resting-people').innerText = `${filaSemanaActual[0]} y ${filaFindeActual[0]}`;
